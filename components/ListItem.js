@@ -28,13 +28,14 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     backgroundColor: '#eee',
     borderRadius: 16,
+    elevation: 3,
   },
   imagebox: {
     flex: 1,
   },
   image: {
     flex: 1,
-    borderRadius: 16,
+    borderRadius: 35,
   },
   textbox: {
     flex: 2,
@@ -44,6 +45,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
     paddingBottom: 15,
+    color: "#1589FF"
   },
 });
 
