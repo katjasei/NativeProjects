@@ -10,6 +10,7 @@ import {MediaProvider} from './contexts/MediaContext';
 const App = () => {
 
  return (
+
    <MediaProvider>
       <View style={styles.container}>
         <List />
