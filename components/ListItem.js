@@ -2,11 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 
+
 base_url = "http://media.mw.metropolia.fi/wbma/uploads/";
 
 const ListItem = (props) => {
+
   return (
-    <TouchableOpacity style={styles.row}>
+
+    <TouchableOpacity onPress={() => {props.navigation.push('Single', {
+      filename: base_url + props.singleMedia.filename,
+      title: props.singleMedia.title,
+      });
+      }}style={styles.row}>
+
       <View style={styles.imagebox}>
         <Image
           style={styles.image}
@@ -16,7 +24,9 @@ const ListItem = (props) => {
       <View style={styles.textbox}>
         <Text style={styles.listTitle}> {props.singleMedia.title} </Text>
         <Text> {props.singleMedia.description} </Text>
+
       </View>
+
     </TouchableOpacity>
   );
 };
@@ -48,6 +58,7 @@ const styles = StyleSheet.create({
     color: "#1589FF"
   },
 });
+
 
 ListItem.propTypes = {
   singleMedia: PropTypes.object,
