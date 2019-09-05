@@ -10,7 +10,7 @@ import Navigator from './navigators/Navigator';
 const App = () => {
   return (
     <MediaProvider>
-      <Navigator></Navigator>
+      <Navigator/>
     </MediaProvider>
   );
 };

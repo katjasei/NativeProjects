@@ -26,11 +26,12 @@ const [media, setMedia] = useContext(MediaContext);
         let id_element = element.file_id;
 
 
-        fetch(dataUrl+id_element)
+        fetch(dataUrl + id_element)
         .then((response) => {
           return response.json();
         })
         .then((result) => {
+          console.log(result);
            mediaArray.push(result);
            setMedia(mediaArray);
         });
