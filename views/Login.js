@@ -7,22 +7,38 @@ import {
   AsyncStorage,
 } from 'react-native';
 
-import FormTextInput from '../components/FormTextInput'
+import FormTextInput from '../components/FormTextInput';
+import useSignUpForm from '../hooks/LoginHook'
+
 
 
 const Login = (props) => { // props is needed for navigation
-  const signInAsync = async (props) => {
-      const response = await fetch (url, {
+
+  const url_login = 'http://media.mw.metropolia.fi/wbma/login/';
+
+  const signInAsync = async (inputs) => {
+
+
+    const response = await fetch (url_login, {
         method: 'POST', // or 'PUT'
-        body: JSON.stringify(data), // data can be `string` or {object}!
+        body: JSON.stringify(inputs), // data can be `string` or {object}!
         headers:{'Content-Type': 'application/json'}
       });
-      const json = await response.json();
-      console.log(json);
 
-    await AsyncStorage.setItem('userToken', tokenFromApi);
+      const json = await response.json();
+
+      //console.log(json.user.full_name);
+
+    await AsyncStorage.setItem('userToken', json.token);
+    await AsyncStorage.setItem('username', inputs.username);
+    await AsyncStorage.setItem('password', inputs.password);
+
     props.navigation.navigate('App');
   };
+
+
+  const {inputs, handleUsernameChange, handlePasswordChange} = useSignUpForm();
+
   return (
     <View style={styles.container}>
     <Text>Login</Text>
@@ -30,13 +46,18 @@ const Login = (props) => { // props is needed for navigation
       <FormTextInput
         autoCapitalize='none'
         placeholder='username'
+        onChangeText={handleUsernameChange}
+        value={inputs.username}
+
       />
       <FormTextInput
         autoCapitalize='none'
         placeholder='password'
         secureTextEntry={true}
+        onChangeText={handlePasswordChange}
+        value={inputs.password}
       />
-      <Button title="Sign in!" onPress={signInAsync} />
+      <Button title="Sign in!" onPress={() => {signInAsync(inputs);} }/>
     </View>
   </View>
   );

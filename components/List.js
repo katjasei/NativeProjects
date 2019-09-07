@@ -31,7 +31,7 @@ const [media, setMedia] = useContext(MediaContext);
           return response.json();
         })
         .then((result) => {
-          console.log(result);
+
            mediaArray.push(result);
            setMedia(mediaArray);
         });
