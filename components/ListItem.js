@@ -9,7 +9,8 @@ const ListItem = (props) => {
 
   return (
 
-    <TouchableOpacity onPress={() => {props.navigation.push('Single', {
+    <TouchableOpacity onPress={() => {console.log('klik');
+    props.navigation.push('Single', {
       filename: base_url + props.singleMedia.filename,
       title: props.singleMedia.title,
       });

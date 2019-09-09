@@ -1,6 +1,7 @@
 import React, {useContext, useEffect} from 'react';
 import {FlatList} from 'react-native';
 import PropTypes from 'prop-types';
+import {List as BaseList} from 'native-base';
 
 import ListItem from './ListItem';
 import {MediaContext} from '../contexts/MediaContext';

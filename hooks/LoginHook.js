@@ -21,9 +21,27 @@ const useSignUpForm = () => {
       }));
   };
 
+  const handleEmailChange = (text) => {
+    setInputs((inputs) =>
+      ({
+        ...inputs,
+        email: text,
+      }));
+  };
+
+  const handleFull_NameChange = (text) => {
+    setInputs((inputs) =>
+      ({
+        ...inputs,
+        full_name: text,
+      }));
+  };
+
   return {
     handleUsernameChange,
     handlePasswordChange,
+    handleEmailChange,
+    handleFull_NameChange,
     inputs,
   };
 };

@@ -9,41 +9,49 @@ import {
 
 import FormTextInput from '../components/FormTextInput';
 import useSignUpForm from '../hooks/LoginHook'
-import useRegistrationForm from '../hooks/RegistrationHook'
+//import useRegistrationForm from '../hooks/RegistrationHook'
 
 
 const Login = (props) => { // props is needed for navigation
 
   const url_login = 'http://media.mw.metropolia.fi/wbma/login/';
-  const url_regist = 'http://media.mw.metropolia.fi/wbma/users/';
+  const url_regist = 'http://media.mw.metropolia.fi/wbma/users';
 
   const signInAsync = async (inputs) => {
 
+    const data = {
+      'username': inputs.username,
+      'password': inputs.password,
+    };
 
     const response = await fetch (url_login, {
         method: 'POST', // or 'PUT'
-        body: JSON.stringify(inputs), // data can be `string` or {object}!
+        body: JSON.stringify(data), // data can be `string` or {object}!
         headers:{'Content-Type': 'application/json'}
       });
 
       const json = await response.json();
 
-      console.log(json.user.email);
-
     await AsyncStorage.setItem('userToken', json.token);
-    await AsyncStorage.setItem('username', inputs.username);
-    await AsyncStorage.setItem('password', inputs.password);
-    //await AsyncStorage.setItem('full_name', json.user.full_name);
-    await AsyncStorage.setItem('email', json.user.email);
+    await AsyncStorage.setItem('user', JSON.stringify(json.user));
+
     props.navigation.navigate('App');
   };
 
-  const registrationAsync = async (inputsRegister) => {
+  const registrationAsync = async (inputs) => {
 
+    const data = {
+      'username': inputs.username,
+      'password': inputs.password,
+      'email': inputs.email,
+      'full_name': inputs.full_name,
+    };
+
+    console.log("data",data);
 
     const response = await fetch (url_regist, {
         method: 'POST', // or 'PUT'
-        body: JSON.stringify(inputsRegister), // data can be `string` or {object}!
+        body: JSON.stringify(data), // data can be `string` or {object}!
         headers:{'Content-Type': 'application/json'}
       });
 
@@ -51,14 +59,13 @@ const Login = (props) => { // props is needed for navigation
 
      console.log("json",json);
 
-    signInAsync(inputsRegister);
+    signInAsync(inputs);
 
   };
 
 
-  const {inputs, handleUsernameChange, handlePasswordChange} = useSignUpForm();
-
-  const {inputsRegister, handleUsernameRegister, handlePasswordRegister, handleEmailRegister, handleFullNameRegister} = useRegistrationForm();
+  const {inputs, handleUsernameChange, handlePasswordChange,
+    handleEmailChange, handleFull_NameChange} = useSignUpForm();
 
   return (
     <View style={styles.container}>
@@ -87,32 +94,30 @@ const Login = (props) => { // props is needed for navigation
       <FormTextInput
         autoCapitalize='none'
         placeholder='username'
-        onChangeText={handleUsernameRegister}
-        value={inputsRegister.username}
+        onChangeText={handleUsernameChange}
+        value={inputs.username}
 
       />
       <FormTextInput
         autoCapitalize='none'
         placeholder='password'
         secureTextEntry={true}
-        onChangeText={handlePasswordRegister}
-        value={inputsRegister.password}
+        onChangeText={handlePasswordChange}
+        value={inputs.password}
       />
        <FormTextInput
         autoCapitalize='none'
         placeholder='email'
-        secureTextEntry={true}
-        onChangeText={handleEmailRegister}
-        value={inputsRegister.email}
+        onChangeText={handleEmailChange}
+        value={inputs.email}
       />
         <FormTextInput
         autoCapitalize='none'
-        placeholder='full_name'
-        secureTextEntry={true}
-        onChangeText={handleFullNameRegister}
-        value={inputsRegister.full_name}
+        placeholder='full name'
+        onChangeText={handleFull_NameChange}
+        value={inputs.full_name}
       />
-      <Button title="Register" onPress={() => {registrationAsync(inputsRegister);} }/>
+      <Button title="Register" onPress={() => {registrationAsync(inputs);} }/>
     </View>
 
   </View>
